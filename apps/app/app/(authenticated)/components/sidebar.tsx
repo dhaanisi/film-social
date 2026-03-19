@@ -155,6 +155,16 @@ const data = {
   ],
   navSecondary: [
     {
+      title: "Feed",
+      url: "/feed",
+      icon: ShareIcon,
+    },
+    {
+      title: "Films",
+      url: "/films/search",
+      icon: FrameIcon,
+    },
+    {
       title: "Webhooks",
       url: "/webhooks",
       icon: AnchorIcon,

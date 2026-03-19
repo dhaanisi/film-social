@@ -2,6 +2,7 @@ import { auth } from "@repo/auth/server";
 import { database } from "@repo/database";
 import { notFound, redirect } from "next/navigation";
 import { Header } from "../components/header";
+import { apiTmdbSearchMovies } from "../film-social/tmdb";
 
 type SearchPageProperties = {
   searchParams: Promise<{
