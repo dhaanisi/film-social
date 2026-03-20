@@ -11,9 +11,42 @@ datasource db {
   relationMode = "prisma"
 }
 
-// This is a stub model.
-// Delete it and add your own Prisma models.
 model Page {
   id   Int    @id @default(autoincrement())
   name String
+}
+
+model User {
+  id          String   @id // matches auth().userId
+  displayName String
+  handle      String   @unique
+  createdAt   DateTime @default(now())
+
+  reviews   Review[]
+  following Follow[] @relation("following")
+  followers Follow[] @relation("followers")
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("following", fields: [followerId], references: [id])
+  following User @relation("followers", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  filmId    String
+  rating    Int
+  spoiler   Boolean  @default(false)
+  text      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
