@@ -2,6 +2,7 @@ import { env } from "@/env";
 import "./styles.css";
 import { AnalyticsProvider } from "@repo/analytics/provider";
 import { DesignSystemProvider } from "@repo/design-system";
+import { SidebarProvider } from "@repo/design-system/components/ui/sidebar";
 import { fonts } from "@repo/design-system/lib/fonts";
 import { Toolbar } from "@repo/feature-flags/components/toolbar";
 import type { ReactNode } from "react";
@@ -22,7 +23,7 @@ const RootLayout = ({ children }: RootLayoutProperties) => (
           ).toString()}
           termsUrl={new URL("/legal/terms", env.NEXT_PUBLIC_WEB_URL).toString()}
         >
-          {children}
+          <SidebarProvider>{children}</SidebarProvider>
         </DesignSystemProvider>
       </AnalyticsProvider>
       <Toolbar />

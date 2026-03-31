@@ -1,5 +1,3 @@
-import { ModeToggle } from "@repo/design-system/components/mode-toggle";
-import { CommandIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 type AuthLayoutProps = {
@@ -7,31 +5,24 @@ type AuthLayoutProps = {
 };
 
 const AuthLayout = ({ children }: AuthLayoutProps) => (
-  <div className="container relative grid h-dvh flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-    <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
-      <div className="absolute inset-0 bg-muted" />
-      <div className="relative z-20 flex items-center font-medium text-lg text-primary">
-        <CommandIcon className="mr-2 h-6 w-6" />
-        Acme Inc
-      </div>
-      <div className="absolute top-4 right-4">
-        <ModeToggle />
-      </div>
-      <div className="relative z-20 mt-auto text-primary">
-        <blockquote className="space-y-2">
-          <p className="text-lg">
-            &ldquo;This library has saved me countless hours of work and helped
-            me deliver stunning designs to my clients faster than ever
-            before.&rdquo;
-          </p>
-          <footer className="text-sm">Sofia Davis</footer>
-        </blockquote>
-      </div>
-    </div>
-    <div className="lg:p-8">
-      <div className="mx-auto flex w-full max-w-[400px] flex-col justify-center space-y-6">
-        {children}
-      </div>
+  <div className="dark relative flex min-h-dvh items-center justify-center overflow-hidden bg-[#0a0a0a]">
+    {/* Grid overlay */}
+    <div
+      className="pointer-events-none absolute inset-0 opacity-[0.04]"
+      style={{
+        backgroundImage: `
+          linear-gradient(oklch(0.2 0.05 190) 1px, transparent 1px),
+          linear-gradient(90deg, oklch(0.2 0.05 190) 1px, transparent 1px)
+        `,
+        backgroundSize: "4px 4px",
+      }}
+    />
+
+    {/* Ambient glow */}
+    <div className="-translate-x-1/2 -translate-y-1/2 pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[700px] rounded-full bg-cyan/5 blur-[120px]" />
+
+    <div className="relative z-10 flex w-full max-w-md flex-col items-center justify-center gap-6 px-6 py-10">
+      {children}
     </div>
   </div>
 );
