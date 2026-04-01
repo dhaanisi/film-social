@@ -9,18 +9,10 @@ import {
   CollapsibleTrigger,
 } from "@repo/design-system/components/ui/collapsible";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@repo/design-system/components/ui/dropdown-menu";
-import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
@@ -36,21 +28,22 @@ import {
 import { cn } from "@repo/design-system/lib/utils";
 import { NotificationsTrigger } from "@repo/notifications/components/trigger";
 import {
-  AnchorIcon,
-  BookOpenIcon,
-  BotIcon,
+  Activity,
+  Bookmark,
   ChevronRightIcon,
+  Clapperboard,
+  Eye,
+  Film,
   FolderIcon,
-  FrameIcon,
+  Globe,
   LifeBuoyIcon,
-  MapIcon,
-  MoreHorizontalIcon,
-  PieChartIcon,
+  List,
+  Search as SearchIcon,
   SendIcon,
   Settings2Icon,
-  ShareIcon,
-  SquareTerminalIcon,
-  Trash2Icon,
+  Tv,
+  User,
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -66,108 +59,85 @@ const data = {
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  navMain: [
+  navSurveillance: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminalIcon,
+      title: "Feed",
+      url: "/feed",
+      icon: Activity,
       isActive: true,
+    },
+    {
+      title: "Global Activity",
+      url: "#",
+      icon: Globe,
+    },
+    {
+      title: "Watchers",
+      url: "#",
+      icon: Eye,
+    },
+  ],
+  navTheaters: [
+    {
+      title: "Active Rooms",
+      url: "#",
+      icon: Tv,
       items: [
         {
-          title: "History",
+          title: "Public Lobbies",
           url: "#",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
+          title: "Private Screenings",
           url: "#",
         },
       ],
     },
     {
-      title: "Models",
+      title: "Community",
       url: "#",
-      icon: BotIcon,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      icon: Users,
+    },
+  ],
+  navArchive: [
+    {
+      title: "Film Database",
+      url: "/films/search",
+      icon: Film,
     },
     {
-      title: "Documentation",
+      title: "Director Index",
       url: "#",
-      icon: BookOpenIcon,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      icon: List,
     },
+    {
+      title: "Collections",
+      url: "#",
+      icon: FolderIcon,
+    },
+  ],
+  navCitizen: [
+    {
+      title: "Profile",
+      url: "#",
+      icon: User,
+    },
+    {
+      title: "Watchlist",
+      url: "#",
+      icon: Bookmark,
+    },
+    {
+      title: "My Reviews",
+      url: "#",
+      icon: Clapperboard,
+    },
+  ],
+  navSystem: [
     {
       title: "Settings",
       url: "#",
       icon: Settings2Icon,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Feed",
-      url: "/feed",
-      icon: ShareIcon,
-    },
-    {
-      title: "Films",
-      url: "/films/search",
-      icon: FrameIcon,
-    },
-    {
-      title: "Webhooks",
-      url: "/webhooks",
-      icon: AnchorIcon,
     },
     {
       title: "Support",
@@ -180,23 +150,6 @@ const data = {
       icon: SendIcon,
     },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: FrameIcon,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChartIcon,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: MapIcon,
-    },
-  ],
 };
 
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
@@ -205,29 +158,66 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   return (
     <>
       <Sidebar variant="inset">
-        <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <div
-                className={cn(
-                  "h-[36px] overflow-hidden transition-all [&>div]:w-full",
-                  sidebar.open ? "" : "-mx-1"
-                )}
-              >
-                <OrganizationSwitcher
-                  afterSelectOrganizationUrl="/"
-                  hidePersonal
-                />
+        <SidebarHeader className="border-border border-b p-4">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
+              <div className="flex h-6 w-6 items-center justify-center border border-cyan/40 bg-cyan/5 text-[10px] text-cyan">
+                ▶
               </div>
-            </SidebarMenuItem>
-          </SidebarMenu>
+              <span className="font-bold text-foreground text-xs uppercase tracking-[0.3em]">
+                CELLULOID
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-[10px] text-muted-foreground tracking-[0.1em]">
+              <span className="inline-block h-1 w-1 animate-pulse rounded-full bg-cyan" />
+              <span>NETWORK v0.1: ACTIVE</span>
+            </div>
+          </div>
         </SidebarHeader>
+        <div className="p-2">
+          <div
+            className={cn(
+              "overflow-hidden transition-all [&>div]:w-full",
+              sidebar.open ? "" : "-mx-1"
+            )}
+          >
+            <OrganizationSwitcher
+              afterSelectOrganizationUrl="/"
+              hidePersonal
+            />
+          </div>
+        </div>
         <Search />
-        <SidebarContent>
+        <SidebarContent className="font-mono">
+          {/* SURVEILLANCE */}
           <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-[10px] tracking-[0.2em] text-cyan/40">
+              // SURVEILLANCE
+            </SidebarGroupLabel>
             <SidebarMenu>
-              {data.navMain.map((item) => (
+              {data.navSurveillance.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild tooltip={item.title}>
+                    <Link
+                      className="flex items-center gap-2 text-[11px] uppercase tracking-widest"
+                      href={item.url}
+                    >
+                      <item.icon className="h-4 w-4 text-cyan/60" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+
+          {/* THEATERS */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-[10px] tracking-[0.2em] text-cyan/40">
+              // THEATERS
+            </SidebarGroupLabel>
+            <SidebarMenu>
+              {data.navTheaters.map((item) => (
                 <Collapsible
                   asChild
                   defaultOpen={item.isActive}
@@ -235,8 +225,11 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                 >
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip={item.title}>
-                      <Link href={item.url}>
-                        <item.icon />
+                      <Link
+                        className="flex items-center gap-2 text-[11px] uppercase tracking-widest"
+                        href={item.url}
+                      >
+                        <item.icon className="h-4 w-4 text-cyan/60" />
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -253,7 +246,10 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                             {item.items?.map((subItem) => (
                               <SidebarMenuSubItem key={subItem.title}>
                                 <SidebarMenuSubButton asChild>
-                                  <Link href={subItem.url}>
+                                  <Link
+                                    className="text-[10px] text-muted-foreground uppercase tracking-widest"
+                                    href={subItem.url}
+                                  >
                                     <span>{subItem.title}</span>
                                   </Link>
                                 </SidebarMenuSubButton>
@@ -268,89 +264,91 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
               ))}
             </SidebarMenu>
           </SidebarGroup>
-          <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
+
+          {/* ARCHIVE */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-[10px] tracking-[0.2em] text-cyan/40">
+              // ARCHIVE
+            </SidebarGroupLabel>
             <SidebarMenu>
-              {data.projects.map((item) => (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton asChild>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.name}</span>
+              {data.navArchive.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild tooltip={item.title}>
+                    <Link
+                      className="flex items-center gap-2 text-[11px] uppercase tracking-widest"
+                      href={item.url}
+                    >
+                      <item.icon className="h-4 w-4 text-cyan/60" />
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuAction showOnHover>
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">More</span>
-                      </SidebarMenuAction>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className="w-48"
-                      side="bottom"
-                    >
-                      <DropdownMenuItem>
-                        <FolderIcon className="text-muted-foreground" />
-                        <span>View Project</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <ShareIcon className="text-muted-foreground" />
-                        <span>Share Project</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Trash2Icon className="text-muted-foreground" />
-                        <span>Delete Project</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                 </SidebarMenuItem>
               ))}
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <MoreHorizontalIcon />
-                  <span>More</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
-          <SidebarGroup className="mt-auto">
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {data.navSecondary.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <Link href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
+
+          {/* CITIZEN */}
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-[10px] tracking-[0.2em] text-cyan/40">
+              // CITIZEN
+            </SidebarGroupLabel>
+            <SidebarMenu>
+              {data.navCitizen.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild tooltip={item.title}>
+                    <Link
+                      className="flex items-center gap-2 text-[11px] uppercase tracking-widest"
+                      href={item.url}
+                    >
+                      <item.icon className="h-4 w-4 text-cyan/60" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+
+          <div className="mt-auto h-px w-full opacity-50 bg-gradient-to-r from-transparent via-border to-transparent" />
+
+          {/* SYSTEM */}
+          <SidebarGroup>
+            <SidebarMenu>
+              {data.navSystem.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link
+                      className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase tracking-widest hover:text-cyan transition-colors"
+                      href={item.url}
+                    >
+                      <item.icon className="h-3.5 w-3.5" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter>
+        <SidebarFooter className="border-border border-t p-2">
           <SidebarMenu>
-            <SidebarMenuItem className="flex items-center gap-2">
+            <SidebarMenuItem className="flex items-center justify-between gap-2 px-2">
               <UserButton
                 appearance={{
                   elements: {
                     rootBox: "flex overflow-hidden w-full",
-                    userButtonBox: "flex-row-reverse",
-                    userButtonOuterIdentifier: "truncate pl-0",
+                    userButtonBox: "flex-row",
+                    userButtonOuterIdentifier:
+                      "truncate pl-2 font-mono text-[10px] uppercase",
                   },
                 }}
                 showName
               />
-              <div className="flex shrink-0 items-center gap-px">
+              <div className="flex shrink-0 items-center gap-1">
                 <ModeToggle />
                 <Button
                   asChild
-                  className="shrink-0"
+                  className="shrink-0 text-muted-foreground hover:text-cyan transition-colors"
                   size="icon"
                   variant="ghost"
                 >

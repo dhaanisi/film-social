@@ -115,7 +115,7 @@ export default function LandingPage() {
 
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/sign-up"
+                href="/feed"
                 className="group relative overflow-hidden border border-cyan bg-cyan/10 px-8 py-3.5 text-sm font-medium tracking-[0.2em] text-cyan transition-all hover:bg-cyan/20 hover:shadow-[0_0_30px_rgba(0,255,255,0.1)]"
               >
                 <span className="relative z-10">ENTER NETWORK →</span>
